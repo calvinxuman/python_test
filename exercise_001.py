@@ -8,3 +8,4 @@ for i in L1:
                 print(i,j,k)
                 num+=1
 print(num)
+print('test_home')
