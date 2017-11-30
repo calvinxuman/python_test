@@ -6,4 +6,3 @@ for i in L1:
             if i!=j and j!=k and i!=k:
                 print(i,j,k)
                 num += 1
-print(num)
