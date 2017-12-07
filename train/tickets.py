@@ -17,10 +17,10 @@ Example:
     tickets 北京 上海 2016-10-10
     tickets -dg 成都 南京 2016-10-10
 """
-from docopt import docopt
-from stations import stations
-from prettytable import PrettyTable
 import requests
+from docopt import docopt
+
+from train.stations import stations
 
 
 def cli():
