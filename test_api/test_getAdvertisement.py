@@ -9,7 +9,7 @@ class get_advertisement(unittest.TestCase):
         pass
 
     def  test_get_advertisement(self):
-        self.url='http://10.100.60.222:80/galaxy/advertisement/selectAdvertisementOrRecommend'
+        self.url='http://10.100.70.222:80/galaxy/advertisement/selectAdvertisementOrRecommend'
         self.headers = {"Content-Type": "application/json"}
         r=requests.get(self.url,headers=self.headers)
         response=r.json()
