@@ -56,6 +56,9 @@ class TrainsCollection:
         for raw_train in self.available_trains:
             list_train=raw_train.split('|')
             train_no = list_train[3]
+            for i in range(len(list_train)):
+                if list_train[i] == '':
+                    list_train[i] = '--'
             initial = train_no[0].lower()
             if not self.options or initial in self.options:
                 train = [
