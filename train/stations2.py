@@ -1,6 +1,6 @@
 # *-* coding:GBK *-*
 
-stations2={   'AAP': '百里峡',
+stations2={'AAP': '百里峡',
     'AAX': '昂昂溪',
     'ABM': '羊堡',
     'ABV': '运城北',

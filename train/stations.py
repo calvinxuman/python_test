@@ -1,6 +1,6 @@
 # *-* coding:GBK *-*
 
-stations={   '一间堡': 'YJT',
+stations={'一间堡': 'YJT',
     '一面坡': 'YPB',
     '一面山': 'YST',
     '七台河': 'QTB',
