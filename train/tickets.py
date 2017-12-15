@@ -31,7 +31,7 @@ init()
 
 class TrainsCollection:
 
-    header = '车次 车站 时间 历时 商务座 一等 二等 软卧 硬卧 硬座 无座'.split()
+    header = '车次 车站 时间 历时 商务座 一等 二等 软卧 硬卧 硬座 无座 备注'.split()
 
     def __init__(self, available_trains, options):
         """查询到的火车班次集合
@@ -60,7 +60,7 @@ class TrainsCollection:
                 if list_train[i] == '':
                     list_train[i] = '--'
             initial = train_no[0].lower()
-            if not self.options or initial in self.options:
+            if (not self.options or initial in self.options) and list_train[1]=='预订':
                 train = [
                     train_no,
                     '\n'.join([Fore.GREEN + stations2[list_train[6]] + Fore.RESET,
@@ -75,6 +75,7 @@ class TrainsCollection:
                     list_train[28],
                     list_train[29],
                     list_train[26],
+                    list_train[1]
                 ]
                 yield train
 
