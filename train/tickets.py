@@ -14,8 +14,8 @@ Options:
     -z         直达
 
 Examples:
-    tickets 上海 北京 2016-10-10
-    tickets -dg 成都 南京 2016-10-10
+    tickets 上海 北京 2018-01-10
+    tickets -dg 成都 南京 2018-01-10
 """
 
 import requests
