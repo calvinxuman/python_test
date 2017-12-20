@@ -22,24 +22,31 @@ class LoginTest (unittest.TestCase):
     list_password = []
     list_equipment = []
     dict_parameter = {'phone': list_phone, 'password': list_password, 'equipment': list_equipment}
+
     @classmethod
     def setUpClass(cls):
         data = xlrd.open_workbook(
             r'C:\Users\Administrator\PycharmProjects\python_test\test_api\test_case\login_testcase.xlsx')
         table = data.sheet_by_name('login')
-        for i in table.col_values(5, 3):
+        for i in table.col_values(5, 2):
             if i != '':
-                LoginTest.list_phone.append(str(i))
-        for j in table.col_values(6, 3):
+                LoginTest.list_phone.append(str(int(i)))
+            else:
+                LoginTest.list_phone.append('')
+        for j in table.col_values(6, 2):
             if j != '':
                 LoginTest.list_password.append(str(j))
-        for k in table.col_values(7, 3):
+            else:
+                LoginTest.list_password.append('')
+        for k in table.col_values(7, 2):
             if k != '':
                 LoginTest.list_equipment.append(str(k))
+            else:
+                LoginTest.list_equipment.append('')
         print(LoginTest.dict_parameter)
 
     def test_login_001(self):
-        # 未更换设备且用户名密码正确
+        '''未更换设备且用户名密码正确'''
         self.login_001 = Login(LoginTest.dict_parameter['phone'][0],
                                LoginTest.dict_parameter['password'][0],
                                LoginTest.dict_parameter['equipment'][0])
@@ -49,7 +56,7 @@ class LoginTest (unittest.TestCase):
         self.assertEqual('登陆成功', self.result_001)
 
     def test_login_002(self):
-        # 未更换设备，密码错误
+        '''未更换设备，密码错误'''
         self.login_002 = Login(LoginTest.dict_parameter['phone'][1],
                                LoginTest.dict_parameter['password'][1],
                                LoginTest.dict_parameter['equipment'][1])
@@ -59,7 +66,7 @@ class LoginTest (unittest.TestCase):
         self.assertEqual('密码错误', self.result_002)
 
     def test_login_003(self):
-        # 手机号未注册
+        '''手机号未注册'''
         self.login_003 = Login(LoginTest.dict_parameter['phone'][2],
                                LoginTest.dict_parameter['password'][2],
                                LoginTest.dict_parameter['equipment'][2])
@@ -67,6 +74,36 @@ class LoginTest (unittest.TestCase):
                self.login_003.password + '\n equipment:' + self.login_003.equipment)
         self.result_003 = self.login_003.login_test()
         self.assertEqual('手机号未注册', self.result_003)
+
+    def test_login_004(self):
+        '''更换设备且用户名密码正确'''
+        self.login_004 = Login(LoginTest.dict_parameter['phone'][3],
+                               LoginTest.dict_parameter['password'][3],
+                               LoginTest.dict_parameter['equipment'][3])
+        print('The Login_004 parameter is \n phone:' + self.login_004.phone + '\n password:' +
+               self.login_004.password + '\n equipment:' + self.login_004.equipment)
+        self.result_004 = self.login_004.login_test()
+        self.assertEqual('设备不一致，需要发送验证码，调用发送验证码接口', self.result_004)
+
+    def test_login_005(self):
+        '''更换设备,密码错误'''
+        self.login_005 = Login(LoginTest.dict_parameter['phone'][4],
+                               LoginTest.dict_parameter['password'][4],
+                               LoginTest.dict_parameter['equipment'][4])
+        print('The Login_005 parameter is \n phone:' + self.login_005.phone + '\n password:' +
+               self.login_005.password + '\n equipment:' + self.login_005.equipment)
+        self.result_005 = self.login_005.login_test()
+        self.assertEqual('密码错误', self.result_005)
+
+    def test_login_006(self):
+        '''SQL注入登录'''
+        self.login_006 = Login(LoginTest.dict_parameter['phone'][5],
+                               LoginTest.dict_parameter['password'][5],
+                               LoginTest.dict_parameter['equipment'][5])
+        print('The Login_006 parameter is \n phone:' + self.login_006.phone + '\n password:' +
+               self.login_006.password + '\n equipment:' + self.login_006.equipment)
+        self.result_006 = self.login_006.login_test()
+        self.assertEqual('密码错误', self.result_006)
 
     def tearDown(self):
         pass
