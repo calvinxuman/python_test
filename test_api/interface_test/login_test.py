@@ -11,7 +11,7 @@ class Login(object):
         self.equipment = equipment
 
     def login_test(self):
-        longurl = 'http://10.100.70.222' + '/galaxy/user/login' + '?phone=' + self.phone + '&password=' + \
+        longurl = 'http://10.100.70.220:8080' + '/galaxy/user/login' + '?phone=' + self.phone + '&password=' + \
                   self.password + '&equipment=' + self.equipment
         response = requests.post(longurl).json()['msg']
         return response
@@ -43,7 +43,7 @@ class LoginTest (unittest.TestCase):
                 LoginTest.list_equipment.append(str(k))
             else:
                 LoginTest.list_equipment.append('')
-        print(LoginTest.dict_parameter)
+        # print(LoginTest.dict_parameter)
 
     def test_login_001(self):
         '''未更换设备且用户名密码正确'''
@@ -95,6 +95,7 @@ class LoginTest (unittest.TestCase):
         self.result_005 = self.login_005.login_test()
         self.assertEqual('密码错误', self.result_005)
 
+
     def test_login_006(self):
         '''SQL注入登录'''
         self.login_006 = Login(LoginTest.dict_parameter['phone'][5],
@@ -104,6 +105,26 @@ class LoginTest (unittest.TestCase):
                self.login_006.password + '\n equipment:' + self.login_006.equipment)
         self.result_006 = self.login_006.login_test()
         self.assertEqual('密码错误', self.result_006)
+
+    def test_login_007(self):
+        '''手机号为空'''
+        self.login_007 = Login(LoginTest.dict_parameter['phone'][6],
+                               LoginTest.dict_parameter['password'][6],
+                               LoginTest.dict_parameter['equipment'][6])
+        print('The Login_007 parameter is \n phone:' + self.login_007.phone + '\n password:' +
+               self.login_007.password + '\n equipment:' + self.login_007.equipment)
+        self.result_007 = self.login_007.login_test()
+        self.assertEqual('账号,密码不可为空', self.result_007)
+
+    def test_login_008(self):
+        '''密码为空'''
+        self.login_008 = Login(LoginTest.dict_parameter['phone'][7],
+                               LoginTest.dict_parameter['password'][7],
+                               LoginTest.dict_parameter['equipment'][7])
+        print('The Login_008 parameter is \n phone:' + self.login_008.phone + '\n password:' +
+               self.login_008.password + '\n equipment:' + self.login_008.equipment)
+        self.result_008 = self.login_008.login_test()
+        self.assertEqual('账号,密码不可为空', self.result_008)
 
     def tearDown(self):
         pass
