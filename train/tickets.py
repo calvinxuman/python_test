@@ -54,13 +54,13 @@ class TrainsCollection:
     @property
     def trains(self):
         for raw_train in self.available_trains:
-            list_train=raw_train.split('|')
+            list_train = raw_train.split('|')
             train_no = list_train[3]
             for i in range(len(list_train)):
                 if list_train[i] == '':
                     list_train[i] = '--'
             initial = train_no[0].lower()
-            if (not self.options or initial in self.options) and list_train[1]=='预订':
+            if (not self.options or initial in self.options) and list_train[1] == '预订':
                 train = [
                     train_no,
                     '\n'.join([Fore.GREEN + stations2[list_train[6]] + Fore.RESET,
@@ -93,8 +93,9 @@ def cli():
     from_station = stations.get(arguments['<from>'])
     to_station = stations.get(arguments['<to>'])
     date = arguments['<date>']
-    url = ('https://kyfw.12306.cn/otn/leftTicket/query?leftTicketDTO.train_date={}&leftTicketDTO.from_station={}&leftTicketDTO.to_station={}&purpose_codes=ADULT').format(
-                date, from_station, to_station
+    url = ('https://kyfw.12306.cn/otn/leftTicket/query?'
+           'leftTicketDTO.train_date={}&leftTicketDTO.from_station={}&leftTicketDTO.to_station={}&'
+           'purpose_codes=ADULT').format(date, from_station, to_station
            )
     options = ''.join([
         key for key, value in arguments.items() if value is True
@@ -106,6 +107,3 @@ def cli():
 
 if __name__ == '__main__':
     cli()
-
-
-
